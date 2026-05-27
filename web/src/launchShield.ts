@@ -128,18 +128,19 @@ export async function submitDemoAction(action: DemoAction, account: Address) {
   if (!deployment) throw new Error("The public pool has not been deployed.");
 
   const amountIn = ACTION_AMOUNTS[action];
+  const inputToken = demoInputToken(deployment);
   const wallet = walletClient();
   const approvalHash = await wallet.writeContract({
     account,
     chain: xLayer,
-    address: deployment.launchToken,
+    address: inputToken,
     abi: erc20Abi,
     functionName: "approve",
     args: [infrastructure.demoRouter, amountIn],
   });
   await publicClient.waitForTransactionReceipt({ hash: approvalHash });
 
-  const zeroForOne = deployment.launchToken.toLowerCase() === deployment.currency0.toLowerCase();
+  const zeroForOne = inputToken.toLowerCase() === deployment.currency0.toLowerCase();
   const poolKey = {
     currency0: deployment.currency0,
     currency1: deployment.currency1,
@@ -164,6 +165,10 @@ export async function submitDemoAction(action: DemoAction, account: Address) {
     if (isMovementCapError(error)) return { status: "prevented" as const };
     throw error;
   }
+}
+
+export function demoInputToken(target: LaunchShieldDeployment) {
+  return target.quoteToken;
 }
 
 export function isMovementCapError(error: unknown) {
