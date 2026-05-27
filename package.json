@@ -4,7 +4,10 @@
   "version": "0.1.0",
   "scripts": {
     "test:contracts": "node ./node_modules/@foundry-rs/forge/bin.mjs test -vvv",
-    "fmt:contracts": "node ./node_modules/@foundry-rs/forge/bin.mjs fmt --check"
+    "fmt:contracts": "node ./node_modules/@foundry-rs/forge/bin.mjs fmt --check",
+    "build:contracts": "node ./node_modules/@foundry-rs/forge/bin.mjs build --sizes",
+    "test:web": "npm --prefix web test",
+    "build:web": "npm --prefix web run build"
   },
   "dependencies": {
     "@openzeppelin/contracts": "5.5.0",

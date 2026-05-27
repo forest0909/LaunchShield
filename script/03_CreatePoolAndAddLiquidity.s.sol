@@ -5,6 +5,7 @@ import {console2} from "forge-std/console2.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
 import {PoolKey} from "@uniswap/v4-core/src/types/PoolKey.sol";
+import {PoolId, PoolIdLibrary} from "@uniswap/v4-core/src/types/PoolId.sol";
 import {Currency} from "@uniswap/v4-core/src/types/Currency.sol";
 import {TickMath} from "@uniswap/v4-core/src/libraries/TickMath.sol";
 import {LiquidityAmounts} from "@uniswap/v4-core/test/utils/LiquidityAmounts.sol";
@@ -17,6 +18,8 @@ import {XLayerV4Addresses} from "../src/XLayerV4Addresses.sol";
 import {XLayerScript} from "./base/XLayerScript.sol";
 
 contract CreatePoolAndAddLiquidityScript is XLayerScript {
+    using PoolIdLibrary for PoolKey;
+
     uint160 internal constant STARTING_PRICE = 1 << 96;
     uint256 internal constant DEFAULT_INITIAL_LIQUIDITY = 100e18;
 
@@ -38,6 +41,10 @@ contract CreatePoolAndAddLiquidityScript is XLayerScript {
         vm.stopBroadcast();
 
         console2.log("Initial liquidity:", liquidity);
+        console2.log("Currency0:", Currency.unwrap(poolKey.currency0));
+        console2.log("Currency1:", Currency.unwrap(poolKey.currency1));
+        console2.log("Pool ID:");
+        console2.logBytes32(PoolId.unwrap(poolKey.toId()));
     }
 
     function _configuredLiquidity() internal view returns (uint128 liquidity) {
