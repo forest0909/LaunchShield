@@ -24,6 +24,15 @@ export interface LaunchShieldDeployment {
   currency1: Address;
 }
 
+export interface DeploymentTransactions {
+  launchTokenDeployment: Hex | null;
+  quoteTokenDeployment: Hex | null;
+  hookDeployment: Hex | null;
+  poolInitialization: Hex | null;
+  normalSwap: Hex | null;
+  volatilityTrigger: Hex | null;
+}
+
 export const deployment: LaunchShieldDeployment | null =
   deploymentRecord.hook &&
   deploymentRecord.poolId &&
@@ -40,6 +49,15 @@ export const deployment: LaunchShieldDeployment | null =
         currency1: deploymentRecord.currency1 as Address,
       }
     : null;
+
+export const deploymentTransactions: DeploymentTransactions = {
+  launchTokenDeployment: deploymentRecord.transactions.launchTokenDeployment as Hex | null,
+  quoteTokenDeployment: deploymentRecord.transactions.quoteTokenDeployment as Hex | null,
+  hookDeployment: deploymentRecord.transactions.hookDeployment as Hex | null,
+  poolInitialization: deploymentRecord.transactions.poolInitialization as Hex | null,
+  normalSwap: deploymentRecord.transactions.normalSwap as Hex | null,
+  volatilityTrigger: deploymentRecord.transactions.volatilityTrigger as Hex | null,
+};
 
 export const DYNAMIC_FEE_FLAG = 8_388_608;
 export const TICK_SPACING = 60;

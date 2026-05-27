@@ -6,4 +6,5 @@ broadcast/
 .env
 web/node_modules/
 web/dist/
+web/.wrangler/
 coverage/

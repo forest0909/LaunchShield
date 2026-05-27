@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "test": "vitest run",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "pages:create": "wrangler pages project create launchshield-demo --production-branch=main --compatibility-date=2026-05-27 --install-skills=false",
+    "deploy:pages": "npm run build && wrangler pages deploy ./dist --project-name=launchshield-demo --branch=main --install-skills=false"
   },
   "dependencies": {
     "react": "19.2.6",
@@ -23,6 +25,7 @@
     "jsdom": "29.1.1",
     "typescript": "6.0.3",
     "vite": "8.0.14",
-    "vitest": "4.1.7"
+    "vitest": "4.1.7",
+    "wrangler": "4.95.0"
   }
 }

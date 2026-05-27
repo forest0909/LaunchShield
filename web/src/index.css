@@ -200,6 +200,10 @@ a {
   border-right: 1px solid var(--line);
 }
 
+.left-stack .panel + .panel {
+  border-top: 1px solid var(--line);
+}
+
 .workspace .panel {
   border: 0;
   border-radius: 0;
@@ -208,6 +212,45 @@ a {
 
 .right-stack .panel + .panel {
   border-top: 1px solid var(--line);
+}
+
+.published-transactions {
+  padding: 20px 24px 22px;
+}
+
+.published-transactions h2 {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 520;
+  color: var(--soft);
+}
+
+.empty-evidence {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.tx-list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: var(--soft);
+  font-size: 12px;
+}
+
+.tx-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tx-list a:hover {
+  color: var(--accent);
 }
 
 .panel-header {

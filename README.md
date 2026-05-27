@@ -62,6 +62,25 @@ behavior, demo tokens, and published X Layer addresses. The interface tests
 verify the honest predeployment state and the nested v4 error decoding used to
 label a prevented attempt.
 
+## Public Demo Hosting
+
+The static interface is configured for Cloudflare Pages Direct Upload as
+`launchshield-demo`. Publishing requires authorization to a Cloudflare account,
+but it does not require a wallet signature or any contract transaction.
+
+```bash
+cd web
+npm run pages:create
+npm run deploy:pages
+```
+
+Run `pages:create` once after authorizing Wrangler; subsequent
+`deploy:pages` runs update the same hosted interface. Deploy once for an honest
+predeployment preview if needed, then deploy again after filling the real
+addresses and transaction hashes in `src/deployments/196.json`.
+
+Reference: [Cloudflare Pages Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/)
+
 ## Verified X Layer Path
 
 Target network: X Layer Mainnet (`chainId 196`). The official Uniswap v4
@@ -139,8 +158,10 @@ node ./node_modules/@foundry-rs/forge/bin.mjs script script/03_CreatePoolAndAddL
 
 This final deployment step prints sorted `Currency0`, `Currency1`, and the
 `Pool ID`. Populate those values, the Hook, and both token addresses in
-`web/src/deployments/196.json`; the app then reads live state and unlocks the
-wallet actions.
+`web/src/deployments/196.json`. Also populate the two token deployment
+transaction hashes, Hook deployment transaction hash, and pool initialization
+transaction hash under `transactions`; the app then reads live state, presents
+explorer evidence, and unlocks the wallet actions.
 
 ## Demo Flow
 
@@ -157,6 +178,11 @@ The web app provides the intended judge path:
 Each action uses a fixed amount calibrated against the default
 `INITIAL_LIQUIDITY=100e18`. Do not change initial liquidity without
 recalibrating the demo amounts and tests.
+
+After recording accepted `Normal Buy` and `Trigger Volatility` results, add
+their transaction hashes as `transactions.normalSwap` and
+`transactions.volatilityTrigger` in `web/src/deployments/196.json` so judges
+can verify the settled demonstrations without reconnecting a wallet.
 
 For a command-line accepted small swap, set `INPUT_TOKEN` to the deployed
 `mUSDC` token and run:

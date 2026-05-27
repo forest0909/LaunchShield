@@ -11,6 +11,8 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 - Verified X Layer Mainnet v4 infrastructure configuration.
 - React interface with wallet flow, state reads, demo actions, explorer links,
   and prevented-attempt error decoding.
+- Cloudflare Pages Direct Upload configuration for a public demo URL after
+  account authorization.
 - Visual concept and browser-captured predeployment UI in `web/design/`.
 
 ## Must Be Completed With User-Controlled Accounts
@@ -22,6 +24,8 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 - Sign the deployment and demo transactions from the README runbook.
 - Fill real token, Hook, Pool ID, and transaction hashes into
   `web/src/deployments/196.json`.
+- Authorize a hosting account and publish the configured Pages interface; add
+  the resulting public demo URL to the post and form.
 - Create or use the project's independent X account and publish the required
   submission post mentioning `@XLayerOfficial @Uniswap @flapdotsh`.
 - Record/upload the optional demo video and submit the official Google Form.
@@ -31,6 +35,8 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 | Field | Value |
 | --- | --- |
 | Network | X Layer Mainnet (`196`) |
+| Public demo URL | `TBD after hosting account authorization` |
+| Public source repository | `TBD after repository publication` |
 | PoolManager | `0x360E68faCcca8cA495c1B759Fd9EEe466db9FB32` |
 | PositionManager | `0xcF1EAFC6928dC385A342E7C6491d371d2871458b` |
 | Demo router | `0xE4e6CAdE3E2a67F16A5d867C44e1e7Df02f0fc03` |
@@ -38,7 +44,8 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 | mUSDC token | `TBD after user-signed deployment` |
 | LaunchShield Hook | `TBD after user-signed deployment` |
 | Protected Pool ID | `TBD after pool initialization` |
-| Token deployment tx | `TBD` |
+| XSH deployment tx | `TBD` |
+| mUSDC deployment tx | `TBD` |
 | Hook deployment tx | `TBD` |
 | Pool/liquidity tx | `TBD` |
 | Normal swap tx | `TBD` |
@@ -47,6 +54,12 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 For the rejected large-swap action, the interface intentionally performs
 simulation after allowance approval and reports the Hook's decoded protection
 reason without sending a knowingly reverting swap transaction.
+
+Copy the confirmed hashes into `web/src/deployments/196.json` as
+`transactions.launchTokenDeployment`, `transactions.quoteTokenDeployment`,
+`transactions.hookDeployment`, `transactions.poolInitialization`,
+`transactions.normalSwap`, and `transactions.volatilityTrigger`; the page
+will expose them as explorer evidence links.
 
 ## Form Copy
 

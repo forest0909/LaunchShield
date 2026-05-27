@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import type { Address } from "viem";
+import type { Address, Hex } from "viem";
 
-import { addressLink, deployment, infrastructure, transactionLink } from "./contracts";
+import {
+  addressLink,
+  deployment,
+  deploymentTransactions,
+  infrastructure,
+  transactionLink,
+  type DeploymentTransactions,
+} from "./contracts";
 import {
   formatCap,
   formatCountdown,
@@ -133,6 +140,7 @@ export default function App() {
           <section className="workspace panel" aria-label="LaunchShield pool demonstration">
             <div className="left-stack">
               <PoolEvidence />
+              <PublishedTransactions transactions={deploymentTransactions} />
             </div>
             <div className="right-stack">
               <ProtectionPanel snapshot={snapshot} />
@@ -236,6 +244,38 @@ function EvidenceRow({ label, value, link }: { label: string; value: string; lin
         </a>
       ) : null}
     </div>
+  );
+}
+
+export function PublishedTransactions({ transactions }: { transactions: DeploymentTransactions }) {
+  const entries: Array<[string, Hex | null]> = [
+    ["XSH deployment", transactions.launchTokenDeployment],
+    ["mUSDC deployment", transactions.quoteTokenDeployment],
+    ["Hook deployment", transactions.hookDeployment],
+    ["Pool initialization", transactions.poolInitialization],
+    ["Normal buy", transactions.normalSwap],
+    ["Volatility trigger", transactions.volatilityTrigger],
+  ];
+  const published = entries.filter((entry): entry is [string, Hex] => Boolean(entry[1]));
+
+  return (
+    <article className="panel published-transactions" aria-label="Published transactions">
+      <h2>Published evidence</h2>
+      {published.length === 0 ? (
+        <p className="empty-evidence">No public demo transactions published yet.</p>
+      ) : (
+        <ul className="tx-list">
+          {published.map(([label, hash]) => (
+            <li key={label}>
+              <a href={transactionLink(hash)} target="_blank" rel="noreferrer" aria-label={`Verify ${label} transaction`}>
+                <span>{label}</span>
+                <Arrow />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </article>
   );
 }
 

@@ -13,5 +13,12 @@
   "quoteToken": null,
   "currency0": null,
   "currency1": null,
-  "transactions": {}
+  "transactions": {
+    "launchTokenDeployment": null,
+    "quoteTokenDeployment": null,
+    "hookDeployment": null,
+    "poolInitialization": null,
+    "normalSwap": null,
+    "volatilityTrigger": null
+  }
 }
