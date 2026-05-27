@@ -1,1 +1,9 @@
 .worktrees/
+node_modules/
+cache/
+out/
+broadcast/
+.env
+web/node_modules/
+web/dist/
+coverage/
