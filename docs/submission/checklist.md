@@ -134,7 +134,7 @@ The form requires Google login before final submission.
 | One-Line Description & Project Highlights | `LaunchShield is a Uniswap v4 Hook on X Layer Testnet that limits oversized early pool movement and raises LP fees after accepted volatility. It demonstrates transparent launch-pool protection with deployed v4 infrastructure, a live Hook, pool evidence, demo swaps, and a public React interface.` |
 | X (Twitter) Official Handle | `https://x.com/zhao_zhulin` |
 | X (Twitter) Post Link | `https://x.com/zhao_zhulin/status/2059877961164370168` |
-| Team Members Telegram Contact | `Fill with the core team Telegram handle(s).` |
+| Team Members Telegram Contact | `zhulin zhao @forest5200` |
 | Team Members X (Twitter) Contact | `zhulin zhao https://x.com/zhao_zhulin` |
 | GitHub Repository Link | `https://github.com/forest0909/LaunchShield` |
 | Any other words to X Layer team | `LaunchShield targets a concrete launch-pool risk: one excessive early trade can distort a thin pool. The Hook keeps the rule at pool level, leaves accepted trading transparent, and publishes all X Layer Testnet addresses, pool ID, and transaction evidence for review.` |
