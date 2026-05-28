@@ -67,12 +67,15 @@ label a prevented attempt.
 
 ## Public Demo Hosting
 
-The static interface is published through a Cloudflare Worker:
+The static interface is published from the `gh-pages` branch:
 
-https://launchshield-demo.forest0909.workers.dev/
+https://forest0909.github.io/LaunchShield/
 
-`docs/demo/` contains the built static assets used by the public demo. No
-wallet signature or contract transaction is needed for frontend updates.
+`docs/demo/` contains the built static assets mirrored to `gh-pages`. No wallet
+signature or contract transaction is needed for frontend updates. A Cloudflare
+Worker mirror also exists at `https://launchshield-demo.forest0909.workers.dev/`,
+but the GitHub Pages URL is the submission URL because it is reachable from the
+current network.
 
 ## X Layer Testnet Path
 
