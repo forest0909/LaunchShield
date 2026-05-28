@@ -14,6 +14,7 @@ import {
   EXPLORER_URL,
   TICK_SPACING,
   X_LAYER_CHAIN_ID,
+  X_LAYER_NETWORK_NAME,
   X_LAYER_RPC_URL,
   demoRouterAbi,
   deployment,
@@ -35,7 +36,7 @@ const ACTION_AMOUNTS: Record<DemoAction, bigint> = {
 
 const xLayer = {
   id: X_LAYER_CHAIN_ID,
-  name: "X Layer Mainnet",
+  name: X_LAYER_NETWORK_NAME,
   nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 },
   rpcUrls: {
     default: { http: [X_LAYER_RPC_URL] },
@@ -126,9 +127,11 @@ export async function readProtectionSnapshot(target: LaunchShieldDeployment) {
 
 export async function submitDemoAction(action: DemoAction, account: Address) {
   if (!deployment) throw new Error("The public pool has not been deployed.");
+  if (!infrastructure.demoRouter) throw new Error("The demo router has not been deployed.");
 
   const amountIn = ACTION_AMOUNTS[action];
   const inputToken = demoInputToken(deployment);
+  const demoRouter = infrastructure.demoRouter;
   const wallet = walletClient();
   const approvalHash = await wallet.writeContract({
     account,
@@ -136,7 +139,7 @@ export async function submitDemoAction(action: DemoAction, account: Address) {
     address: inputToken,
     abi: erc20Abi,
     functionName: "approve",
-    args: [infrastructure.demoRouter, amountIn],
+    args: [demoRouter, amountIn],
   });
   await publicClient.waitForTransactionReceipt({ hash: approvalHash });
 
@@ -152,7 +155,7 @@ export async function submitDemoAction(action: DemoAction, account: Address) {
   try {
     const { request } = await publicClient.simulateContract({
       account,
-      address: infrastructure.demoRouter,
+      address: demoRouter,
       abi: demoRouterAbi,
       functionName: "swapExactTokensForTokens",
       args: [amountIn, 0n, zeroForOne, poolKey, "0x", account, BigInt(Math.floor(Date.now() / 1000) + 300)],

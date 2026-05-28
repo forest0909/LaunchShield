@@ -19,13 +19,23 @@ abstract contract XLayerScript is Script {
     int24 internal constant TICK_SPACING = 60;
 
     function _requireXLayerDeployments() internal view {
-        if (block.chainid != XLayerV4Addresses.CHAIN_ID) revert UnsupportedChain(block.chainid);
+        _requireXLayerChain();
 
-        _requireCode(XLayerV4Addresses.POOL_MANAGER);
-        _requireCode(XLayerV4Addresses.POSITION_MANAGER);
-        _requireCode(XLayerV4Addresses.STATE_VIEW);
-        _requireCode(XLayerV4Addresses.PERMIT2);
-        _requireCode(XLayerV4Addresses.CREATE2_FACTORY);
+        _requireCode(_poolManager());
+        _requireCode(_positionManager());
+        _requireCode(_stateView());
+        _requireCode(_permit2());
+    }
+
+    function _requireXLayerChain() internal view {
+        if (block.chainid != XLayerV4Addresses.MAINNET_CHAIN_ID && block.chainid != XLayerV4Addresses.TESTNET_CHAIN_ID)
+        {
+            revert UnsupportedChain(block.chainid);
+        }
+    }
+
+    function _requireXLayerTestnet() internal view {
+        if (block.chainid != XLayerV4Addresses.TESTNET_CHAIN_ID) revert UnsupportedChain(block.chainid);
     }
 
     function _deployer() internal view returns (address deployer) {
@@ -48,6 +58,43 @@ abstract contract XLayerScript is Script {
             tickSpacing: TICK_SPACING,
             hooks: IHooks(hookAddress)
         });
+    }
+
+    function _poolManager() internal view returns (address) {
+        return _configuredAddress("POOL_MANAGER", XLayerV4Addresses.POOL_MANAGER);
+    }
+
+    function _positionManager() internal view returns (address) {
+        return _configuredAddress("POSITION_MANAGER", XLayerV4Addresses.POSITION_MANAGER);
+    }
+
+    function _stateView() internal view returns (address) {
+        return _configuredAddress("STATE_VIEW", XLayerV4Addresses.STATE_VIEW);
+    }
+
+    function _permit2() internal view returns (address) {
+        return _configuredAddress("PERMIT2", XLayerV4Addresses.PERMIT2);
+    }
+
+    function _demoRouter() internal view returns (address) {
+        return _configuredAddress("DEMO_ROUTER", XLayerV4Addresses.HOOKMATE_DEMO_ROUTER);
+    }
+
+    function _create2Factory() internal view returns (address factory) {
+        factory = vm.envOr("CREATE2_FACTORY", XLayerV4Addresses.CREATE2_FACTORY);
+        if (factory == address(0)) revert ZeroAddress("CREATE2_FACTORY");
+    }
+
+    function _configuredAddress(string memory name, address mainnetDefault) internal view returns (address target) {
+        _requireXLayerChain();
+
+        if (block.chainid == XLayerV4Addresses.MAINNET_CHAIN_ID) {
+            target = vm.envOr(name, mainnetDefault);
+        } else {
+            target = vm.envOr(name, address(0));
+        }
+
+        if (target == address(0)) revert ZeroAddress(name);
     }
 
     function _requireCode(address target) internal view {

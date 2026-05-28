@@ -8,7 +8,7 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 
 - LaunchShield Hook with deterministic behavior tests.
 - Demo `XSH` and `mUSDC` tokens and X Layer deployment scripts.
-- Verified X Layer Mainnet v4 infrastructure configuration.
+- X Layer Testnet v4 infrastructure self-deployment script.
 - React interface with wallet flow, state reads, demo actions, explorer links,
   and prevented-attempt error decoding.
 - Cloudflare Pages Direct Upload configuration for a public demo URL after
@@ -17,13 +17,14 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 
 ## Must Be Completed With User-Controlled Accounts
 
-- Select a public EVM wallet address and fund it with minimal X Layer Mainnet
+- Use the public deployment address
+  `0x740416EBA95b459cd20e7359EF21BeF9a837D9d4`, funded with X Layer Testnet
   OKB gas.
 - Import that wallet into a local encrypted Foundry keystore; do not share its
   secret material.
 - Sign the deployment and demo transactions from the README runbook.
 - Fill real token, Hook, Pool ID, and transaction hashes into
-  `web/src/deployments/196.json`.
+  `web/src/deployments/1952.json`.
 - Authorize a hosting account and publish the configured Pages interface; add
   the resulting public demo URL to the post and form.
 - Create or use the project's independent X account and publish the required
@@ -34,28 +35,31 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 
 | Field | Value |
 | --- | --- |
-| Network | X Layer Mainnet (`196`) |
+| Network | X Layer Testnet (`1952`) |
+| Deployer | `0x740416EBA95b459cd20e7359EF21BeF9a837D9d4` |
 | Public demo URL | `TBD after hosting account authorization` |
 | Public source repository | `TBD after repository publication` |
-| PoolManager | `0x360E68faCcca8cA495c1B759Fd9EEe466db9FB32` |
-| PositionManager | `0xcF1EAFC6928dC385A342E7C6491d371d2871458b` |
-| Demo router | `0xE4e6CAdE3E2a67F16A5d867C44e1e7Df02f0fc03` |
-| XSH token | `TBD after user-signed deployment` |
-| mUSDC token | `TBD after user-signed deployment` |
-| LaunchShield Hook | `TBD after user-signed deployment` |
-| Protected Pool ID | `TBD after pool initialization` |
-| XSH deployment tx | `TBD` |
-| mUSDC deployment tx | `TBD` |
-| Hook deployment tx | `TBD` |
-| Pool/liquidity tx | `TBD` |
-| Normal swap tx | `TBD` |
-| Volatility trigger tx | `TBD` |
+| Permit2 | `0x3191Fc1E303EF4e12a7DE5f5d2e8d53A0660c5b9` |
+| PoolManager | `0x32222Ef5dbe193bcfb2F9B289CaA0381700961a8` |
+| PositionManager | `0x8F83ea0aCaC8a5B6435a5c3606F9a3f36301f142` |
+| StateView | `0x0350070c19f215bcBaD8B9562e0E8f2E801a4031` |
+| Demo router | `0x32116B5C8242FF43eFdDEDA6D094097f7C155907` |
+| XSH token | `0xD3641f39d9c51704cb3d7f77B5BC5d98FB15a548` |
+| mUSDC token | `0xD49786798C6488f3D6e5A153fb5B77c072bb9c3C` |
+| LaunchShield Hook | `0x894b5cc8625Db5250b0aB6AC4C74233066FD10C0` |
+| Protected Pool ID | `0x2dd1723cd6c18fc354a90e5279aaa1d380397bfcfa9588717f36b75f4deba297` |
+| XSH deployment tx | `0x24276f96de74efd2cecf3793ffd6bdf8fe4d0b08eff55ed53a427e71609742ec` |
+| mUSDC deployment tx | `0x4e49a349b8ac5ce719073db9d5937e8817f0a993b58a14586ec5078947036a8a` |
+| Hook deployment tx | `0xf0d9f466fff29fcd186029afa00e2ca59bc68cb52915f4980dbd4791e82fe046` |
+| Pool/liquidity tx | `0x414bb5b84831dec18cc80da65ad322bfbb71b8798e591ff33f359a03b42140fe` |
+| Normal swap tx | `0xb61a8e7d7f73779d90268589e6f468b7086fc32e1a5f6c5f4f6dc702a0c599bb` |
+| Volatility trigger tx | `0xb110a6444493afad38e296fffd07b19fc204254c3937c05ea12850f9eb63ac27` |
 
 For the rejected large-swap action, the interface intentionally performs
 simulation after allowance approval and reports the Hook's decoded protection
 reason without sending a knowingly reverting swap transaction.
 
-Copy the confirmed hashes into `web/src/deployments/196.json` as
+Copy the confirmed hashes into `web/src/deployments/1952.json` as
 `transactions.launchTokenDeployment`, `transactions.quoteTokenDeployment`,
 `transactions.hookDeployment`, `transactions.poolInitialization`,
 `transactions.normalSwap`, and `transactions.volatilityTrigger`; the page
@@ -67,7 +71,7 @@ will expose them as explorer evidence links.
 
 **One-line description:**
 
-LaunchShield is a Uniswap v4 Hook protected launch pool on X Layer that rejects
+LaunchShield is a Uniswap v4 Hook protected launch pool on X Layer Testnet that rejects
 excessive early single-swap price movement and automatically raises LP fees
 after accepted volatility.
 
@@ -100,14 +104,14 @@ does not prevent bots, MEV, Sybil behavior, or financial loss.
 **Tech stack:**
 
 Solidity, Uniswap v4 Hook callbacks, OpenZeppelin Hooks base, Foundry,
-X Layer Mainnet, React, Vite, and viem.
+X Layer Testnet, React, Vite, and viem.
 
 ## Required Social Draft
 
 Use the project's independent X account and replace the placeholders:
 
 ```text
-We built LaunchShield for the Build X Hackathon: a Uniswap v4 Hook on X Layer
+We built LaunchShield for the Build X Hackathon: a Uniswap v4 Hook on X Layer Testnet
 that rejects oversized early pool movements and raises LP fees after accepted
 volatility.
 

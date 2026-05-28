@@ -14,7 +14,6 @@ import {IPoolInitializer_v4} from "@uniswap/v4-periphery/src/interfaces/IPoolIni
 import {Actions} from "@uniswap/v4-periphery/src/libraries/Actions.sol";
 import {IPermit2} from "permit2/src/interfaces/IPermit2.sol";
 
-import {XLayerV4Addresses} from "../src/XLayerV4Addresses.sol";
 import {XLayerScript} from "./base/XLayerScript.sol";
 
 contract CreatePoolAndAddLiquidityScript is XLayerScript {
@@ -36,8 +35,7 @@ contract CreatePoolAndAddLiquidityScript is XLayerScript {
 
         vm.startBroadcast();
         _approvePositionManager(poolKey);
-        IPositionManager(XLayerV4Addresses.POSITION_MANAGER)
-            .multicall(_poolInitializationCalls(poolKey, liquidity, deployer));
+        IPositionManager(_positionManager()).multicall(_poolInitializationCalls(poolKey, liquidity, deployer));
         vm.stopBroadcast();
 
         console2.log("Initial liquidity:", liquidity);
@@ -54,15 +52,14 @@ contract CreatePoolAndAddLiquidityScript is XLayerScript {
     }
 
     function _approvePositionManager(PoolKey memory poolKey) internal {
-        IERC20(Currency.unwrap(poolKey.currency0)).approve(XLayerV4Addresses.PERMIT2, type(uint256).max);
-        IERC20(Currency.unwrap(poolKey.currency1)).approve(XLayerV4Addresses.PERMIT2, type(uint256).max);
-        IPermit2 permit2 = IPermit2(XLayerV4Addresses.PERMIT2);
-        permit2.approve(
-            Currency.unwrap(poolKey.currency0), XLayerV4Addresses.POSITION_MANAGER, type(uint160).max, type(uint48).max
-        );
-        permit2.approve(
-            Currency.unwrap(poolKey.currency1), XLayerV4Addresses.POSITION_MANAGER, type(uint160).max, type(uint48).max
-        );
+        address permit2Address = _permit2();
+        address positionManager = _positionManager();
+
+        IERC20(Currency.unwrap(poolKey.currency0)).approve(permit2Address, type(uint256).max);
+        IERC20(Currency.unwrap(poolKey.currency1)).approve(permit2Address, type(uint256).max);
+        IPermit2 permit2 = IPermit2(permit2Address);
+        permit2.approve(Currency.unwrap(poolKey.currency0), positionManager, type(uint160).max, type(uint48).max);
+        permit2.approve(Currency.unwrap(poolKey.currency1), positionManager, type(uint160).max, type(uint48).max);
     }
 
     function _poolInitializationCalls(PoolKey memory poolKey, uint128 liquidity, address recipient)

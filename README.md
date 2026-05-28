@@ -12,9 +12,9 @@ price stability.
 
 The MVP code, tests, interface, and X Layer deployment scripts are complete.
 The public Hook/pool addresses intentionally remain unset in
-`web/src/deployments/196.json` until transactions are signed from a
-user-controlled X Layer wallet. A valid hackathon submission requires that
-final public deployment.
+`web/src/deployments/1952.json` until transactions are signed from a
+user-controlled X Layer Testnet wallet. A valid hackathon submission requires
+that final public deployment.
 
 ## Demonstrated Rules
 
@@ -36,9 +36,12 @@ cooldown changes are rolled back with the transaction.
 - `src/LaunchShieldHook.sol`: v4 Hook with launch movement caps and dynamic
   guarded fees.
 - `src/MockLaunchToken.sol`: two demo ERC-20 assets, `XSH` and `mUSDC`.
-- `src/XLayerV4Addresses.sol`: verified X Layer v4 infrastructure addresses.
+- `src/XLayerV4Addresses.sol`: X Layer chain IDs and verified mainnet v4
+  references.
 - `script/00_DeployTokens.s.sol` through `script/04_DemoSwap.s.sol`: guarded
   public deployment and demo flow.
+- `script/00_DeployTestnetV4.s.sol`: self-deploys the v4 infrastructure needed
+  on X Layer Testnet.
 - `web/`: React/Vite interface with wallet switching, on-chain reads, three
   demo actions, and decoded prevented-attempt status.
 
@@ -77,37 +80,32 @@ npm run deploy:pages
 Run `pages:create` once after authorizing Wrangler; subsequent
 `deploy:pages` runs update the same hosted interface. Deploy once for an honest
 predeployment preview if needed, then deploy again after filling the real
-addresses and transaction hashes in `src/deployments/196.json`.
+addresses and transaction hashes in `src/deployments/1952.json`.
 
 Reference: [Cloudflare Pages Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/)
 
-## Verified X Layer Path
+## X Layer Testnet Path
 
-Target network: X Layer Mainnet (`chainId 196`). The official Uniswap v4
-deployment listing provides:
+Target network: X Layer Testnet (`chainId 1952`).
 
-| Contract | Address |
+The hackathon requirements allow deploying the v4 Pool and Hook on X Layer
+mainnet or testnet. The official Uniswap v4 deployment listing publishes X
+Layer Mainnet contracts but currently does not publish X Layer Testnet v4
+contracts, so the testnet runbook first self-deploys:
+
+| Contract | Source |
 | --- | --- |
-| PoolManager | `0x360E68faCcca8cA495c1B759Fd9EEe466db9FB32` |
-| PositionManager | `0xcF1EAFC6928dC385A342E7C6491d371d2871458b` |
-| StateView | `0x76Fd297e2D437cd7f76d50F01AfE6160f86e9990` |
-| Universal Router | `0xDa00aE15d3A71466517129255255db7c0c0956d3` |
-| Permit2 | `0x000000000022D473030F116dDEE9F6B43aC78BA3` |
-
-For the deterministic demonstration calls, the UI uses Hookmate's simple v4
-router at `0xE4e6CAdE3E2a67F16A5d867C44e1e7Df02f0fc03`, not the official
-Universal Router. Its bytecode is already present on X Layer and its
-`poolManager()` and `permit2()` getters were checked against the official
-addresses above.
-
-The official listing currently does not publish an X Layer Testnet v4
-deployment. This runbook therefore targets a deliberately low-value mainnet
-demo pool.
+| Permit2 | Pre-existing Hookmate Permit2 bytecode at `0x3191Fc1E303EF4e12a7DE5f5d2e8d53A0660c5b9` |
+| PoolManager | Hookmate artifact |
+| PositionManager | Hookmate artifact |
+| StateView | Uniswap v4 periphery lens |
+| Demo router | Hookmate simple v4 router, not Universal Router |
 
 Sources:
 
 - [Uniswap v4 deployments](https://docs.uniswap.org/contracts/v4/deployments)
-- [X Layer RPC documentation](https://web3.okx.com/xlayer/docs/developer/rpc-endpoints/rpc-endpoints)
+- [X Layer network information](https://web3.okx.com/xlayer/docs/developer/build-on-xlayer/network-information)
+- [X Layer faucet](https://web3.okx.com/xlayer/faucet)
 - [Hackathon page](https://web3.okx.com/zh-hans/xlayer/build-x-hackathon/hook)
 
 ## Wallet-Signed Deployment
@@ -120,8 +118,8 @@ node ./node_modules/@foundry-rs/cast/bin.mjs wallet import launchshield-deployer
 cp .env.example .env
 ```
 
-Fill only the public `DEPLOYER_ADDRESS` in `.env`, ensure the address has a
-small amount of OKB for X Layer Mainnet gas, then load the variables:
+Fill only the public `DEPLOYER_ADDRESS` in `.env`, ensure the address has test
+OKB for X Layer Testnet gas, then load the variables:
 
 ```bash
 set -a
@@ -133,21 +131,26 @@ Broadcast in order. Each command will use the encrypted keystore and request
 its password locally.
 
 ```bash
+node ./node_modules/@foundry-rs/forge/bin.mjs script script/00_DeployTestnetV4.s.sol:DeployTestnetV4Script \
+  --rpc-url "$X_LAYER_RPC_URL" --account launchshield-deployer --sender "$DEPLOYER_ADDRESS" --broadcast -vvv
+```
+
+The script reuses any non-zero infrastructure address already present in
+`.env` and deploys the missing pieces. Copy the printed `POOL_MANAGER`,
+`POSITION_MANAGER`, `STATE_VIEW`, and `DEMO_ROUTER` values into `.env` and
+`web/src/deployments/1952.json`. Reload `.env`, then deploy the app contracts:
+
+```bash
 node ./node_modules/@foundry-rs/forge/bin.mjs script script/00_DeployTokens.s.sol:DeployTokensScript \
   --rpc-url "$X_LAYER_RPC_URL" --account launchshield-deployer --sender "$DEPLOYER_ADDRESS" --broadcast -vvv
 
 node ./node_modules/@foundry-rs/forge/bin.mjs script script/01_DeployHook.s.sol:DeployHookScript \
   --rpc-url "$X_LAYER_RPC_URL" --account launchshield-deployer --sender "$DEPLOYER_ADDRESS" \
   --always-use-create-2-factory --broadcast -vvv
-
-node ./node_modules/@foundry-rs/forge/bin.mjs script script/02_DeployDemoRouter.s.sol:DeployDemoRouterScript \
-  --rpc-url "$X_LAYER_RPC_URL" --account launchshield-deployer --sender "$DEPLOYER_ADDRESS" --broadcast -vvv
 ```
 
 After step `00`, place the printed XSH/mUSDC addresses in `TOKEN_A` and
 `TOKEN_B`. After step `01`, place the printed Hook address in `HOOK_ADDRESS`.
-Step `02` is expected to print that it is reusing the verified demo router
-without sending a deployment transaction.
 
 Create the protected pool and initial mock-token liquidity:
 
@@ -158,7 +161,7 @@ node ./node_modules/@foundry-rs/forge/bin.mjs script script/03_CreatePoolAndAddL
 
 This final deployment step prints sorted `Currency0`, `Currency1`, and the
 `Pool ID`. Populate those values, the Hook, and both token addresses in
-`web/src/deployments/196.json`. Also populate the two token deployment
+`web/src/deployments/1952.json`. Also populate the two token deployment
 transaction hashes, Hook deployment transaction hash, and pool initialization
 transaction hash under `transactions`; the app then reads live state, presents
 explorer evidence, and unlocks the wallet actions.
@@ -181,7 +184,7 @@ recalibrating the demo amounts and tests.
 
 After recording accepted `Normal Buy` and `Trigger Volatility` results, add
 their transaction hashes as `transactions.normalSwap` and
-`transactions.volatilityTrigger` in `web/src/deployments/196.json` so judges
+`transactions.volatilityTrigger` in `web/src/deployments/1952.json` so judges
 can verify the settled demonstrations without reconnecting a wallet.
 
 For a command-line accepted small swap, set `INPUT_TOKEN` to the deployed

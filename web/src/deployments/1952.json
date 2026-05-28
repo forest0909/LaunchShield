@@ -1,0 +1,26 @@
+{
+  "network": "X Layer Testnet",
+  "chainId": 1952,
+  "rpcUrl": "https://testrpc.xlayer.tech/terigon",
+  "explorerUrl": "https://www.okx.com/web3/explorer/xlayer-test",
+  "poolManager": "0x32222Ef5dbe193bcfb2F9B289CaA0381700961a8",
+  "positionManager": "0x8F83ea0aCaC8a5B6435a5c3606F9a3f36301f142",
+  "stateView": "0x0350070c19f215bcBaD8B9562e0E8f2E801a4031",
+  "universalRouter": null,
+  "permit2": "0x3191Fc1E303EF4e12a7DE5f5d2e8d53A0660c5b9",
+  "demoRouter": "0x32116B5C8242FF43eFdDEDA6D094097f7C155907",
+  "hook": "0x894b5cc8625Db5250b0aB6AC4C74233066FD10C0",
+  "poolId": "0x2dd1723cd6c18fc354a90e5279aaa1d380397bfcfa9588717f36b75f4deba297",
+  "launchToken": "0xD3641f39d9c51704cb3d7f77B5BC5d98FB15a548",
+  "quoteToken": "0xD49786798C6488f3D6e5A153fb5B77c072bb9c3C",
+  "currency0": "0xD3641f39d9c51704cb3d7f77B5BC5d98FB15a548",
+  "currency1": "0xD49786798C6488f3D6e5A153fb5B77c072bb9c3C",
+  "transactions": {
+    "launchTokenDeployment": "0x24276f96de74efd2cecf3793ffd6bdf8fe4d0b08eff55ed53a427e71609742ec",
+    "quoteTokenDeployment": "0x4e49a349b8ac5ce719073db9d5937e8817f0a993b58a14586ec5078947036a8a",
+    "hookDeployment": "0xf0d9f466fff29fcd186029afa00e2ca59bc68cb52915f4980dbd4791e82fe046",
+    "poolInitialization": "0x414bb5b84831dec18cc80da65ad322bfbb71b8798e591ff33f359a03b42140fe",
+    "normalSwap": "0xb61a8e7d7f73779d90268589e6f468b7086fc32e1a5f6c5f4f6dc702a0c599bb",
+    "volatilityTrigger": "0xb110a6444493afad38e296fffd07b19fc204254c3937c05ea12850f9eb63ac27"
+  }
+}

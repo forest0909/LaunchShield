@@ -1,11 +1,12 @@
 import { encodeErrorResult } from "viem";
 import { describe, expect, it } from "vitest";
 
-import { hookAbi, infrastructure, wrappedErrorAbi } from "./contracts";
+import { hookAbi, wrappedErrorAbi } from "./contracts";
 import { demoInputToken, isMovementCapError } from "./launchShield";
 
 describe("LaunchShield revert decoding", () => {
   it("recognizes a PoolManager-wrapped movement cap rejection", () => {
+    const poolManager = "0x0000000000000000000000000000000000000100";
     const reason = encodeErrorResult({
       abi: hookAbi,
       errorName: "MovementCapExceeded",
@@ -14,7 +15,7 @@ describe("LaunchShield revert decoding", () => {
     const wrapped = encodeErrorResult({
       abi: wrappedErrorAbi,
       errorName: "WrappedError",
-      args: [infrastructure.poolManager, "0xfa340e56", reason, "0x"],
+      args: [poolManager, "0xfa340e56", reason, "0x"],
     });
 
     expect(isMovementCapError({ data: wrapped })).toBe(true);

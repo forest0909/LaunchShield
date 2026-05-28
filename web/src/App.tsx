@@ -7,6 +7,8 @@ import {
   deploymentTransactions,
   infrastructure,
   transactionLink,
+  X_LAYER_CHAIN_ID,
+  X_LAYER_NETWORK_NAME,
   type DeploymentTransactions,
 } from "./contracts";
 import {
@@ -63,7 +65,7 @@ export default function App() {
     try {
       const { switchToXLayer } = await import("./launchShield");
       await switchToXLayer();
-      setChainId(196);
+      setChainId(X_LAYER_CHAIN_ID);
       await refresh();
     } catch (error) {
       setActivity({ tone: "error", title: "Network switch failed", detail: errorMessage(error) });
@@ -106,7 +108,7 @@ export default function App() {
 
   const walletReady =
     typeof window !== "undefined" && Boolean((window as Window & { ethereum?: unknown }).ethereum);
-  const actionable = Boolean(deployment && account && chainId === 196 && !busy);
+  const actionable = Boolean(deployment && infrastructure.demoRouter && account && chainId === X_LAYER_CHAIN_ID && !busy);
 
   return (
     <div className="page">
@@ -115,6 +117,7 @@ export default function App() {
           account={account}
           chainId={chainId}
           walletReady={walletReady}
+          networkName={X_LAYER_NETWORK_NAME}
           onConnect={handleConnect}
           onSwitch={handleNetworkSwitch}
         />
@@ -161,11 +164,12 @@ interface HeaderProps {
   account: Address | null;
   chainId: number | null;
   walletReady: boolean;
+  networkName: string;
   onConnect: () => Promise<void>;
   onSwitch: () => Promise<void>;
 }
 
-function Header({ account, chainId, walletReady, onConnect, onSwitch }: HeaderProps) {
+function Header({ account, chainId, walletReady, networkName, onConnect, onSwitch }: HeaderProps) {
   return (
     <header className="nav">
       <a className="brand" href="/" aria-label="LaunchShield home">
@@ -183,7 +187,7 @@ function Header({ account, chainId, walletReady, onConnect, onSwitch }: HeaderPr
       </nav>
       <div className="account-controls">
         <button className="network" type="button" onClick={() => void onSwitch()}>
-          {chainId === 196 ? "X Layer" : "Switch to X Layer"}
+          {chainId === X_LAYER_CHAIN_ID ? networkName : `Switch to ${networkName}`}
         </button>
         <button className="wallet" type="button" onClick={() => void onConnect()} disabled={!walletReady}>
           {account ? shorten(account) : walletReady ? "Connect wallet" : "Wallet unavailable"}
@@ -220,13 +224,13 @@ function PoolEvidence() {
         />
         <EvidenceRow
           label="PoolManager"
-          value={infrastructure.poolManager}
-          link={addressLink(infrastructure.poolManager)}
+          value={infrastructure.poolManager ?? "Awaiting testnet v4 deployment"}
+          link={infrastructure.poolManager ? addressLink(infrastructure.poolManager) : undefined}
         />
         <EvidenceRow
           label="Demo router"
-          value={infrastructure.demoRouter}
-          link={addressLink(infrastructure.demoRouter)}
+          value={infrastructure.demoRouter ?? "Awaiting testnet v4 deployment"}
+          link={infrastructure.demoRouter ? addressLink(infrastructure.demoRouter) : undefined}
         />
       </div>
     </article>

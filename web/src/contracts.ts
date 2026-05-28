@@ -1,18 +1,19 @@
 import type { Address, Hex } from "viem";
 
-import deploymentRecord from "./deployments/196.json";
+import deploymentRecord from "./deployments/1952.json";
 
-export const X_LAYER_CHAIN_ID = 196;
-export const X_LAYER_RPC_URL = "https://rpc.xlayer.tech";
-export const EXPLORER_URL = "https://www.oklink.com/xlayer";
+export const X_LAYER_CHAIN_ID = deploymentRecord.chainId;
+export const X_LAYER_NETWORK_NAME = deploymentRecord.network;
+export const X_LAYER_RPC_URL = deploymentRecord.rpcUrl;
+export const EXPLORER_URL = deploymentRecord.explorerUrl;
 
 export const infrastructure = {
-  poolManager: deploymentRecord.poolManager as Address,
-  positionManager: deploymentRecord.positionManager as Address,
-  stateView: deploymentRecord.stateView as Address,
-  universalRouter: deploymentRecord.universalRouter as Address,
-  permit2: deploymentRecord.permit2 as Address,
-  demoRouter: deploymentRecord.demoRouter as Address,
+  poolManager: optionalAddress(deploymentRecord.poolManager),
+  positionManager: optionalAddress(deploymentRecord.positionManager),
+  stateView: optionalAddress(deploymentRecord.stateView),
+  universalRouter: optionalAddress(deploymentRecord.universalRouter),
+  permit2: optionalAddress(deploymentRecord.permit2),
+  demoRouter: optionalAddress(deploymentRecord.demoRouter),
 } as const;
 
 export interface LaunchShieldDeployment {
@@ -180,4 +181,8 @@ export function addressLink(address: Address) {
 
 export function transactionLink(hash: Hex) {
   return `${EXPLORER_URL}/tx/${hash}`;
+}
+
+function optionalAddress(value: string | null) {
+  return value ? (value as Address) : null;
 }

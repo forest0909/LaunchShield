@@ -1,20 +1,33 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 import type { Hex } from "viem";
 
 import App, { PublishedTransactions } from "./App";
+import { deployment, deploymentTransactions } from "./contracts";
+
+afterEach(() => {
+  cleanup();
+});
 
 describe("LaunchShield interface", () => {
-  it("presents the honest pre-deployment demonstration workflow", () => {
+  it("presents deployed testnet evidence while wallet actions stay gated", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { name: "Protected launches, enforced in the pool." })).toBeInTheDocument();
-    expect(screen.getAllByText("Awaiting public deployment")).toHaveLength(3);
+    expect(screen.getByText(deployment?.poolId ?? "")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /view contract/i })).toHaveAttribute(
+      "href",
+      `https://www.okx.com/web3/explorer/xlayer-test/address/${deployment?.hook}`,
+    );
     expect(screen.getByRole("button", { name: "Normal Buy" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Trigger Large Swap" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Trigger Volatility" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Switch to X Layer Testnet" })).toBeInTheDocument();
     expect(screen.getByText(/Does not prevent bots, MEV, or price loss/)).toBeInTheDocument();
-    expect(screen.getByText("No public demo transactions published yet.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /verify normal buy transaction/i })).toHaveAttribute(
+      "href",
+      `https://www.okx.com/web3/explorer/xlayer-test/tx/${deploymentTransactions.normalSwap}`,
+    );
   });
 
   it("links submitted deployment and demonstration transactions to explorer evidence", () => {
@@ -35,7 +48,7 @@ describe("LaunchShield interface", () => {
 
     expect(screen.getByRole("link", { name: /verify XSH deployment transaction/i })).toHaveAttribute(
       "href",
-      `https://www.oklink.com/xlayer/tx/${hash}`,
+      `https://www.okx.com/web3/explorer/xlayer-test/tx/${hash}`,
     );
     expect(screen.getByRole("link", { name: /verify mUSDC deployment transaction/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /verify pool initialization transaction/i })).toBeInTheDocument();

@@ -18,7 +18,7 @@ contract DemoSwapScript is XLayerScript {
     function run() external {
         _requireXLayerDeployments();
         address deployer = _deployer();
-        address routerAddress = vm.envAddress("DEMO_ROUTER");
+        address routerAddress = _demoRouter();
         address inputToken = vm.envAddress("INPUT_TOKEN");
         PoolKey memory poolKey =
             _poolKey(vm.envAddress("TOKEN_A"), vm.envAddress("TOKEN_B"), vm.envAddress("HOOK_ADDRESS"));

@@ -2,7 +2,10 @@
 pragma solidity ^0.8.26;
 
 library XLayerV4Addresses {
-    uint256 internal constant CHAIN_ID = 196;
+    uint256 internal constant MAINNET_CHAIN_ID = 196;
+    uint256 internal constant TESTNET_CHAIN_ID = 1952;
+    uint256 internal constant CHAIN_ID = MAINNET_CHAIN_ID;
+
     address internal constant POOL_MANAGER = 0x360E68faCcca8cA495c1B759Fd9EEe466db9FB32;
     address internal constant POSITION_MANAGER = 0xcF1EAFC6928dC385A342E7C6491d371d2871458b;
     address internal constant STATE_VIEW = 0x76Fd297e2D437cd7f76d50F01AfE6160f86e9990;
