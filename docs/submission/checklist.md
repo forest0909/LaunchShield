@@ -39,6 +39,7 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 | Deployer | `0x740416EBA95b459cd20e7359EF21BeF9a837D9d4` |
 | Public demo URL | `https://forest0909.github.io/LaunchShield/` |
 | Public source repository | `https://github.com/forest0909/LaunchShield` |
+| X post URL | `https://x.com/zhao_zhulin/status/2059877961164370168` |
 | Permit2 | `0x3191Fc1E303EF4e12a7DE5f5d2e8d53A0660c5b9` |
 | PoolManager | `0x32222Ef5dbe193bcfb2F9B289CaA0381700961a8` |
 | PositionManager | `0x8F83ea0aCaC8a5B6435a5c3606F9a3f36301f142` |
@@ -131,10 +132,10 @@ The form requires Google login before final submission.
 | --- | --- |
 | Project Name | `LaunchShield` |
 | One-Line Description & Project Highlights | `LaunchShield is a Uniswap v4 Hook on X Layer Testnet that limits oversized early pool movement and raises LP fees after accepted volatility. It demonstrates transparent launch-pool protection with deployed v4 infrastructure, a live Hook, pool evidence, demo swaps, and a public React interface.` |
-| X (Twitter) Official Handle | `Use the project X account URL. If no project account exists, using a personal handle is a rules risk because the event asks for an official project handle.` |
-| X (Twitter) Post Link | `Paste the live post URL after posting the Required Social Draft above.` |
+| X (Twitter) Official Handle | `https://x.com/zhao_zhulin` |
+| X (Twitter) Post Link | `https://x.com/zhao_zhulin/status/2059877961164370168` |
 | Team Members Telegram Contact | `Fill with the core team Telegram handle(s).` |
-| Team Members X (Twitter) Contact | `Fill with the core team X profile URL(s).` |
+| Team Members X (Twitter) Contact | `zhulin zhao https://x.com/zhao_zhulin` |
 | GitHub Repository Link | `https://github.com/forest0909/LaunchShield` |
 | Any other words to X Layer team | `LaunchShield targets a concrete launch-pool risk: one excessive early trade can distort a thin pool. The Hook keeps the rule at pool level, leaves accepted trading transparent, and publishes all X Layer Testnet addresses, pool ID, and transaction evidence for review.` |
 
