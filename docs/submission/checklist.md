@@ -108,18 +108,18 @@ X Layer Testnet, React, Vite, and viem.
 
 ## Required Social Draft
 
-Use the project's independent X account and replace the placeholders:
+Use the project's independent X account. This draft is sized for X URL
+shortening and includes the required `@XLayerOfficial` tag plus `#BuildX`:
 
 ```text
-We built LaunchShield for the Build X Hackathon: a Uniswap v4 Hook on X Layer Testnet
-that rejects oversized early pool movements and raises LP fees after accepted
-volatility.
+LaunchShield for #BuildX: Uniswap v4 Hook on X Layer Testnet. Caps oversized
+early pool moves and raises LP fees after volatility.
 
 Hook: 0x894b5cc8625Db5250b0aB6AC4C74233066FD10C0
 Demo: https://forest0909.github.io/LaunchShield/
 Repo: https://github.com/forest0909/LaunchShield
 
-@XLayerOfficial @Uniswap @flapdotsh #BuildX
+@XLayerOfficial @Uniswap @flapdotsh
 ```
 
 ## Google Form Fields
