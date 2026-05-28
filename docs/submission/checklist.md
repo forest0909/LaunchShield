@@ -119,8 +119,24 @@ Hook: 0x894b5cc8625Db5250b0aB6AC4C74233066FD10C0
 Demo: https://forest0909.github.io/LaunchShield/
 Repo: https://github.com/forest0909/LaunchShield
 
-@XLayerOfficial @Uniswap @flapdotsh
+@XLayerOfficial @Uniswap @flapdotsh #BuildX
 ```
+
+## Google Form Fields
+
+Official form title: `[Build X- Hook the future] Hackathon Project Submission`.
+The form requires Google login before final submission.
+
+| Field | Submission Value |
+| --- | --- |
+| Project Name | `LaunchShield` |
+| One-Line Description & Project Highlights | `LaunchShield is a Uniswap v4 Hook on X Layer Testnet that limits oversized early pool movement and raises LP fees after accepted volatility. It demonstrates transparent launch-pool protection with deployed v4 infrastructure, a live Hook, pool evidence, demo swaps, and a public React interface.` |
+| X (Twitter) Official Handle | `Use the project X account URL. If no project account exists, using a personal handle is a rules risk because the event asks for an official project handle.` |
+| X (Twitter) Post Link | `Paste the live post URL after posting the Required Social Draft above.` |
+| Team Members Telegram Contact | `Fill with the core team Telegram handle(s).` |
+| Team Members X (Twitter) Contact | `Fill with the core team X profile URL(s).` |
+| GitHub Repository Link | `https://github.com/forest0909/LaunchShield` |
+| Any other words to X Layer team | `LaunchShield targets a concrete launch-pool risk: one excessive early trade can distort a thin pool. The Hook keeps the rule at pool level, leaves accepted trading transparent, and publishes all X Layer Testnet addresses, pool ID, and transaction evidence for review.` |
 
 ## Demo Video Storyboard (90 Seconds)
 
@@ -142,6 +158,7 @@ Before pressing submit, confirm:
 
 - Contract and pool addresses resolve on an X Layer explorer.
 - Repository and hosted demo links are public.
-- The X post is live and includes all three required mentions.
+- The X post is live, tags `@XLayerOfficial`, and includes `#BuildX`.
+- The X post also mentions `@Uniswap` and `@flapdotsh` to match the event page requirement.
 - Demo video URL is accessible without requesting permission, if provided.
 - All claims match actual transaction behavior and the limitation statement.
