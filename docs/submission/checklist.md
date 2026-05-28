@@ -37,7 +37,7 @@ Submission deadline: **2026-05-28 23:59 UTC / 2026-05-29 07:59 Asia/Shanghai**
 | --- | --- |
 | Network | X Layer Testnet (`1952`) |
 | Deployer | `0x740416EBA95b459cd20e7359EF21BeF9a837D9d4` |
-| Public demo URL | `https://forest0909.github.io/LaunchShield/` |
+| Public demo URL | `https://launchshield-demo.forest0909.workers.dev/` |
 | Public source repository | `https://github.com/forest0909/LaunchShield` |
 | Permit2 | `0x3191Fc1E303EF4e12a7DE5f5d2e8d53A0660c5b9` |
 | PoolManager | `0x32222Ef5dbe193bcfb2F9B289CaA0381700961a8` |
@@ -116,7 +116,7 @@ that rejects oversized early pool movements and raises LP fees after accepted
 volatility.
 
 Hook: 0x894b5cc8625Db5250b0aB6AC4C74233066FD10C0
-Demo: https://forest0909.github.io/LaunchShield/
+Demo: https://launchshield-demo.forest0909.workers.dev/
 Repo: https://github.com/forest0909/LaunchShield
 
 @XLayerOfficial @Uniswap @flapdotsh

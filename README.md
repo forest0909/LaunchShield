@@ -67,13 +67,12 @@ label a prevented attempt.
 
 ## Public Demo Hosting
 
-The static interface is published from GitHub Actions to GitHub Pages:
+The static interface is published through a Cloudflare Worker:
 
-https://forest0909.github.io/LaunchShield/
+https://launchshield-demo.forest0909.workers.dev/
 
-The workflow in `.github/workflows/pages.yml` builds `web/` and deploys
-`web/dist` whenever `main` is pushed. No wallet signature or contract
-transaction is needed for frontend updates.
+`docs/demo/` contains the built static assets used by the public demo. No
+wallet signature or contract transaction is needed for frontend updates.
 
 ## X Layer Testnet Path
 
