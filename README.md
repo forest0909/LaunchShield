@@ -67,22 +67,13 @@ label a prevented attempt.
 
 ## Public Demo Hosting
 
-The static interface is configured for Cloudflare Pages Direct Upload as
-`launchshield-demo`. Publishing requires authorization to a Cloudflare account,
-but it does not require a wallet signature or any contract transaction.
+The static interface is published from GitHub Actions to GitHub Pages:
 
-```bash
-cd web
-npm run pages:create
-npm run deploy:pages
-```
+https://forest0909.github.io/LaunchShield/
 
-Run `pages:create` once after authorizing Wrangler; subsequent
-`deploy:pages` runs update the same hosted interface. Deploy once for an honest
-predeployment preview if needed, then deploy again after filling the real
-addresses and transaction hashes in `src/deployments/1952.json`.
-
-Reference: [Cloudflare Pages Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/)
+The workflow in `.github/workflows/pages.yml` builds `web/` and deploys
+`web/dist` whenever `main` is pushed. No wallet signature or contract
+transaction is needed for frontend updates.
 
 ## X Layer Testnet Path
 
